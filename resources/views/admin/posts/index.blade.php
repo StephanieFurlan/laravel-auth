@@ -20,11 +20,17 @@
                 <h3>{{ $post->title }}</h3>
                 <small class="card-title">{{ $post->created_at->format('d-m-Y')}}</small>
             </div>
-            <div class="card-body d-flex justify-content-between">
+            <div class="card-body">
                 <p class="card-text">{{ $post->body }}</p>
-                <div class="">
-                    <a href="#" class="btn btn-primary btn-sm">Update</a>
-                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.posts.edit', $post->id)}}" class="btn btn-primary btn-sm">Update</a>
+                    {{-- missing form? --}}
+                    <form action="{{ route('admin.posts.destroy', $post->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                    </form>
+                        
                 </div>
                 
             </div>

@@ -68,6 +68,7 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -78,7 +79,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        
+        return view('admin.posts.update', compact('post'));
     }
 
     /**
@@ -88,9 +91,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         //
+        // no empty fields!!!
+        $request->validate([
+            'title' => 'required|max:100',
+            'body' => 'required'
+        ]);
+
+        $data = $request->all();
+        $post->update($data);
+       
+        return redirect()->route('admin.posts.index')->with('message','Post modificato corretamente');
     }
 
     /**
@@ -99,8 +112,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('message','Post eliminato corretamente');
     }
 }
