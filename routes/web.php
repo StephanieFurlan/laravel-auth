@@ -27,5 +27,6 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
         Route::resource('posts', 'PostController');
+        Route::get('profile', 'ProfileController@index')->name('profile.index');
 });
 
