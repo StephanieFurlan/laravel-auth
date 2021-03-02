@@ -9,6 +9,10 @@ use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+// namespace for mails
+use App\Mail\PostMail;
+use Illuminate\Support\Facades\Mail;
+
 class PostController extends Controller
 {   
     private $validationArray = [
@@ -63,6 +67,7 @@ class PostController extends Controller
         // save new post
         $newPost->save();
 
+        Mail::to('pippo@mail.com')->send(new PostMail());
         return redirect()->route('admin.posts.index')->with('message','Post aggiunto corretamente');
         
     }
