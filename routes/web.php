@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// rotte con autenticazione
 Route::prefix('admin')
     ->namespace('Admin')
     ->middleware('auth')
@@ -30,3 +31,7 @@ Route::prefix('admin')
         Route::get('profile', 'ProfileController@index')->name('profile.index');
 });
 
+// rotte pubbliche
+Route::get('/posts', 'PostController@index')->name('posts.index');
+
+Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
