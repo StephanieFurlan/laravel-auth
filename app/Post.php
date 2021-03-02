@@ -11,7 +11,8 @@ class Post extends Model
         'user_id',
         'title',
         'body',
-        'slug'
+        'slug',
+        'img_path'
     ];
 
     /**

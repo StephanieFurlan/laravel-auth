@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Crea un nuovo Post</h1>
+        <h1>Modifica il Post</h1>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -28,10 +28,16 @@
                 <label for="title">Titolo</label>
                 <input type="text" class="form-control" id="title" placeholder="Titolo..." name="title" value="{{ $post->title }}">
             </div>
+
             <div class="form-group">
                 <label for="body">Contenuto</label>
                 <textarea class="form-control rounded-0" id="body" rows="10" name="body">{{ $post->body }}</textarea>
-              </div>
+            </div>
+
+            <div class="form-group">
+                <label for="img_path">Immagine</label>
+                <input class="form-control" type="file" name="img_path" id="img_path" accept="image/*" value="{{ $post->img_path }}">
+            </div>  
               
             <button class="btn btn-success" type="submit">Update</button>
         </form>

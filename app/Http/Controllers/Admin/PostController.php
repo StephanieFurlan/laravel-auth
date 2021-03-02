@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use App\Post;
 use Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
-{
+{   
+    private $validationArray = [
+        'title' => 'required|max:100',
+        'body' => 'required',
+        'img_path' => 'image'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -41,16 +47,18 @@ class PostController extends Controller
     public function store(Request $request)
     {   
         // no empty fields!!!
-        $request->validate([
-            'title' => 'required|max:100',
-            'body' => 'required'
-        ]);
+        $request->validate($this->validationArray);
 
         $data = $request->all();
 
         $newPost = new Post();
         $newPost['slug'] = Str::slug($data['title']);
         $newPost['user_id'] = Auth::id();
+
+        if (!empty($data['img_path'])) {
+            $data['img_path'] = Storage::disk('public')->put('images', $data['img_path']);
+        }
+        
         $newPost->fill($data);
         // save new post
         $newPost->save();
@@ -65,10 +73,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
         //
-        
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -95,10 +103,7 @@ class PostController extends Controller
     {
         //
         // no empty fields!!!
-        $request->validate([
-            'title' => 'required|max:100',
-            'body' => 'required'
-        ]);
+        $request->validate($this->validationArray);
 
         $data = $request->all();
         $post->update($data);

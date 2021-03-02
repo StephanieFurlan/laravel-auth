@@ -28,9 +28,9 @@
                     <form action="{{ route('admin.posts.destroy', $post->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm ml-2 mr-2">Delete</button>
                     </form>
-                        
+                    <a href="{{ route('admin.posts.show', $post->id)}}" class="btn btn-primary btn-sm">Show</a>    
                 </div>
                 
             </div>
